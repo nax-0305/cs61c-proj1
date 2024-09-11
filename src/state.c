@@ -24,7 +24,36 @@ static void update_head(game_state_t *state, unsigned int snum);
 /* Task 1 */
 game_state_t *create_default_state() {
   // TODO: Implement this function.
-  return NULL;
+  game_state_t* gst = malloc(sizeof(game_state_t));
+  if (gst == NULL) {
+      printf("failed to create game_state_t\n");
+      exit(1); 
+  }
+  gst->num_rows = 18;
+  gst->board = malloc(gst->num_rows * sizeof(char*));
+  for (int i=0; i<gst->num_rows; i++) {
+      char* tmp = malloc(20 * sizeof(char));
+      if (tmp == NULL) {
+      	  printf("failed to create char array\n");
+	  exit(1);
+      }
+      char* s = i == 0 || i == 17 ? "####################" : "#                  #" 
+      strcpy(tmp, s);
+      gst->board[i] = tmp;
+  }
+  set_board_at(gst, 2, 9, '*');
+  snake_t* st = malloc(sizeof(snake_t));
+  if (st == NULL) {
+      printf("failed to create snake_t\n");
+      exit(1);
+  }
+  st->tail_row = 2;
+  st->tail_col = 2;
+  st->head_row = 2;
+  st->head_col = 4;
+  st->live = true;
+  gst->snakes = st;
+  return gst;
 }
 
 /* Task 2 */

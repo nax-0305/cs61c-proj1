@@ -32,12 +32,12 @@ game_state_t *create_default_state() {
   gst->num_rows = 18;
   gst->board = malloc(gst->num_rows * sizeof(char*));
   for (int i=0; i<gst->num_rows; i++) {
-      char* tmp = malloc(20 * sizeof(char));
+      char* tmp = malloc(21 * sizeof(char));
       if (tmp == NULL) {
       	  printf("failed to create char array\n");
 	  exit(1);
       }
-      char* s = i == 0 || i == 17 ? "####################" : "#                  #" 
+      char* s = i == 0 || i == 17 ? "####################" : "#                  #";
       strcpy(tmp, s);
       gst->board[i] = tmp;
   }
@@ -52,6 +52,10 @@ game_state_t *create_default_state() {
   st->head_row = 2;
   st->head_col = 4;
   st->live = true;
+  set_board_at(gst, 2, 2, 'd');
+  set_board_at(gst, 2, 3, '>');
+  set_board_at(gst, 2, 4, 'D');
+  gst->num_snakes = 1;
   gst->snakes = st;
   return gst;
 }

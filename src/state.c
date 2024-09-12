@@ -42,6 +42,10 @@ game_state_t *create_default_state() {
       gst->board[i] = tmp;
   }
   set_board_at(gst, 2, 9, '*');
+  set_board_at(gst, 2, 2, 'd');
+  set_board_at(gst, 2, 3, '>');
+  set_board_at(gst, 2, 4, 'D');
+  gst->num_snakes = 1;
   snake_t* st = malloc(sizeof(snake_t));
   if (st == NULL) {
       printf("failed to create snake_t\n");
@@ -52,17 +56,19 @@ game_state_t *create_default_state() {
   st->head_row = 2;
   st->head_col = 4;
   st->live = true;
-  set_board_at(gst, 2, 2, 'd');
-  set_board_at(gst, 2, 3, '>');
-  set_board_at(gst, 2, 4, 'D');
-  gst->num_snakes = 1;
-  gst->snakes = st;
+  gst->snakes = st; 
   return gst;
 }
 
 /* Task 2 */
 void free_state(game_state_t *state) {
   // TODO: Implement this function.
+  for (int i=0; i<state->num_rows; i++){
+      free(state->board[i]);
+  }
+  free(state->snakes);
+  free(state->board);
+  free(state);
   return;
 }
 

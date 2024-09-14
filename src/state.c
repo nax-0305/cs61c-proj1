@@ -321,6 +321,23 @@ static void update_tail(game_state_t *state, unsigned int snum) {
 void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
     // TODO: Implement this function.
     // judge the head and then change the snake state
+    for (unsigned int i=0; i<state->num_snakes; i++) {
+        char next_c = next_square(state, i);
+        if (state->snakes[i].live){
+            if(is_snake(next_c) || next_c == '#') {
+                set_board_at(state, state->snakes[i].head_row, state->snakes[i].head_col, 'x');
+                state->snakes[i].live = false;
+            }
+            else if (next_c != '*') {
+                update_head(state, i);
+                update_tail(state, i); 
+            }
+            else {
+                update_head(state, i);
+                (*add_food)(state);
+            }
+        }
+    }   
     return;
 }
 

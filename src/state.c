@@ -355,7 +355,20 @@ char *read_line(FILE *fp) {
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
     // TODO: Implement this function.
-    
+    game_state_t *gst = malloc(sizeof(game_state_t));
+    if (gst == NULL) {
+        printf("faile to allocate space for game_state_t");
+    }
+    gst->num_snakes = 0;
+    gst->snakes = NULL;
+    unsigned int num_rows = 0;
+    char *line = NULL;
+    while ((line = read_line(fp)) != NULL) {
+        size_t ll = strlen(line);
+        gst->board[num_rows++] = realloc(line, (ll+1) * sizeof(char));
+        free(line);
+    }
+    gst->num_rows = num_rows; 
     return NULL;
 }
 
